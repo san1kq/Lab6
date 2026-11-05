@@ -1,0 +1,125 @@
+#define _CRT_SECURE_NO_DEPRECATE
+#define _USE_MATH_DEFINES
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <locale.h>
+
+void zadacha1(void)
+{
+    int year;
+
+    puts("=== Задача 1 ===");
+    puts("Введите год:");
+    scanf("%d", &year);
+
+    if (year % 4 == 0)
+    {
+        printf("По остатку от деления на 4: год %d високосный\n", year);
+    }
+    else
+    {
+        printf("По остатку от деления на 4: год %d не високосный\n", year);
+    }
+
+    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+    {
+        printf("Точная проверка: год %d високосный\n", year);
+    }
+    else
+    {
+        printf("Точная проверка: год %d не високосный\n", year);
+    }
+    puts("");
+}
+
+void zadacha2(void)
+{
+    double x;
+
+    /*
+    Контрольный пример:
+    x = 0.5  -> 0 <= x <= 1, F = x^2 - x = -0.2500
+    x = 1.5  -> x > 1, F = x^2 - sin(pi*x^2) = 2.25 - sin(2.25*pi) = 1.5429
+    x = -0.5 -> x < 0, F = x^2 - sin(pi*x^2) = 0.25 - sin(0.25*pi) = -0.4571
+    */
+
+    puts("=== Задача 2 ===");
+    puts("Введите x:");
+    scanf("%lf", &x);
+
+    printf("F(%.2f) = %.4f\n", x, (x >= 0 && x <= 1) ? x * x - x : x * x - sin(M_PI * x * x));
+    puts("");
+}
+
+void zadanie3(void)
+{
+    int n, a;
+
+    puts("=== Задание 3 ===");
+    puts("Введите четырёхзначное число:");
+    scanf("%d", &n);
+
+    a = n < 0 ? -n : n;
+    if (a < 1000 || a > 9999)
+    {
+        puts("Это число не четырёхзначное");
+        puts("");
+        return;
+    }
+
+    if (a % 10 % 2 == 0)
+    {
+        puts("число единиц - четное");
+    }
+    if (a / 10 % 10 % 2 == 0)
+    {
+        puts("число десятков - четное");
+    }
+    if (a / 100 % 10 % 2 == 0)
+    {
+        puts("число сотен - четное");
+    }
+    if (a / 1000 % 2 == 0)
+    {
+        puts("число тысяч - четное");
+    }
+    if (a % 2 != 0 && a / 10 % 2 != 0 && a / 100 % 2 != 0 && a / 1000 % 2 != 0)
+    {
+        puts("четных разрядов нет");
+    }
+    puts("");
+}
+
+void homework(void)
+{
+    const char* names[12] = { "Козерог", "Водолей", "Рыбы", "Овен", "Телец", "Близнецы",
+                              "Рак", "Лев", "Дева", "Весы", "Скорпион", "Стрелец" };
+    const int cut[13] = { 0, 20, 19, 21, 20, 21, 21, 23, 23, 23, 23, 22, 22 };
+    int n, d, m;
+
+    puts("=== Домашнее задание === Вариант 9");
+    puts("Введите дату одним числом ddmm:");
+    scanf("%d", &n);
+
+    d = n / 100;
+    m = n % 100;
+
+    printf("%s\n", (m >= 1 && m <= 12 && d >= 1 && d <= 31)
+        ? names[d >= cut[m] ? m % 12 : m - 1]
+        : "Некорректная дата");
+    puts("");
+}
+
+int main(void)
+{
+    setlocale(LC_CTYPE, "rus");
+
+    zadacha1();
+    zadacha2();
+    zadanie3();
+    homework();
+
+    system("pause");
+    return 0;
+}
